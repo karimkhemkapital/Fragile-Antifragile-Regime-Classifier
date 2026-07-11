@@ -19,6 +19,16 @@ The option layer is kept separate from the R+/R- classification. Missing option 
 | `README.md` | Project documentation and option-data fallback policy. |
 | `LICENSE` | Proprietary license terms. |
 
+## Restoring the SQLite store
+
+GitHub LFS rejects individual objects above 2 GB on this account tier. The SQLite store is therefore committed as `yahoo_fragility.sqlite.gz`. Restore the working database locally with:
+
+```powershell
+python -c "import gzip, shutil; shutil.copyfileobj(gzip.open('yahoo_fragility.sqlite.gz','rb'), open('yahoo_fragility.sqlite','wb'))"
+```
+
+The uncompressed `yahoo_fragility.sqlite` file is intentionally ignored by Git.
+
 ## Synthetic option pricing when market chains are missing
 
 Synthetic option values can be generated when an option chain is unavailable, but they must remain model estimates. Black-Scholes and related models do not price the underlying asset: they price an option from the observed underlying price and a set of assumptions.
@@ -173,6 +183,14 @@ This band expresses model uncertainty; it is not a market bid-ask spread.
 
 Synthetic pricing is acceptable as a separate valuation and stress-testing layer. It is not acceptable as a silent replacement for a missing market chain, and it cannot reconstruct an actual implied-volatility surface, bid-ask spread, volume, or open interest without market observations.
 
+## License
+
+Copyright (c) 2026 Karim Khemiri / Khem Kapital. All rights reserved.
+
+These lessons are provided for personal, private, non-commercial educational use only. Reproduction, redistribution, resale, commercial use, paid course reuse, mirroring, scraping, sublicensing, and derivative distribution are not permitted without prior written authorization.
+
+This repository is not open source and is not licensed under MIT.
+
 ## References
 
 - Options Clearing Corporation, [Options 101: Equity Options Primer](https://www.theocc.com/getmedia/dfc83aa2-4a89-42d0-8de7-69e5a71f71a2/OCC-Primer-Options-101-EquityOptions-F.pdf).
@@ -180,5 +198,7 @@ Synthetic pricing is acceptable as a separate valuation and stress-testing layer
 - Black, F. (1976), [The pricing of commodity contracts](https://www.sciencedirect.com/science/article/pii/0304405X76900246/pdf).
 - Cboe, [S&P 500 Index Options](https://www.cboe.com/tradable-products/sp-500/spx-options/).
 - Cboe, [S&P 100 Index Options](https://www.cboe.com/tradable-products/sp-100/sp-100-index-options/).
+
+
 
 
